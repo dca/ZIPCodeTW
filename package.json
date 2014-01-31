@@ -9,7 +9,6 @@
   "author": "",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "csv": "~0.3.7",
     "fuzzy": "~0.1.0"
   }
 }
