@@ -1,20 +1,16 @@
-var csv = require('csv');
-var fs = require('fs');
-var fuzzy = require('fuzzy');
-var zips = [];
+var fuzzy   = require('fuzzy');
+var fs      = require('fs');
 
-var _addr = '新北市中和區中山路３段';
+var _addr   = '新北市中和區中山路３段';
 
-csv()
-    .from.stream(fs.createReadStream(__dirname+'/Zip32_10301.csv'))
-    .on('record', function(row,index){
-        zips[index] = JSON.stringify(row);
-    })
-    .on('end', function(count){
-        var results = fuzzy.filter(_addr, zips);
-        var matches = results.map(function(el) { return el.string; });
-        console.log('查詢：', _addr);
-        console.log(matches);
-    });
-
-
+fs.readFile(__dirname+'/Zip32_10301.csv' ,
+            'utf-8',
+            function read( err , data ) {
+    if (err) throw err;
+    data = data.split('\r\n');
+    console.log('查詢：', _addr);
+    console.log( fuzzy.filter( _addr , data )
+                            .map( function(rt) { 
+                                    return rt.string; 
+                                  }));
+});
